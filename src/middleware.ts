@@ -1,7 +1,7 @@
 import { updateSession } from '@/utils/middleware';
 import { type NextRequest } from 'next/server';
 
-export async function middleware(request: NextRequest) {
+export async function middleware(request: NextRequest): Promise<unknown> {
 	return await updateSession(request);
 }
 

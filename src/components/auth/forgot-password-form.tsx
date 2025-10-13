@@ -8,15 +8,18 @@ import { Label } from '@/components/ui/label';
 import Link from 'next/link';
 import { cn } from '@/utils/cn';
 import { createClient } from '@/utils/client';
-import { useState } from 'react';
+import { type JSX, useState } from 'react';
 
-export function ForgotPasswordForm({ className, ...props }: React.ComponentPropsWithoutRef<'div'>) {
+export function ForgotPasswordForm({
+	className,
+	...props
+}: React.ComponentPropsWithoutRef<'div'>): JSX.Element {
 	const [email, setEmail] = useState('');
 	const [error, setError] = useState<string | null>(null);
 	const [success, setSuccess] = useState(false);
 	const [isLoading, setIsLoading] = useState(false);
 
-	const handleForgotPassword = async (e: React.FormEvent) => {
+	const handleForgotPassword = async (e: React.FormEvent): Promise<void> => {
 		e.preventDefault();
 		const supabase = createClient();
 		setIsLoading(true);

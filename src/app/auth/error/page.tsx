@@ -1,6 +1,11 @@
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { type JSX } from 'react';
 
-export default async function Page({ searchParams }: { searchParams: Promise<{ error: string }> }) {
+export default async function Page({
+	searchParams,
+}: {
+	searchParams: Promise<{ error: string }>;
+}): Promise<JSX.Element> {
 	const params = await searchParams;
 
 	return (
