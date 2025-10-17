@@ -47,13 +47,20 @@ const eslintConfig = [
 			'@typescript-eslint/explicit-function-return-type': 'warn',
 			'@typescript-eslint/no-empty-function': 'warn',
 			'@typescript-eslint/no-unused-expressions': 'error',
-			'@typescript-eslint/no-unused-vars': 'error',
 			'@typescript-eslint/no-explicit-any': 'off',
 			'@typescript-eslint/consistent-type-imports': 'error',
 			'@typescript-eslint/array-type': [
 				'error',
 				{
 					default: 'array-simple',
+				},
+			],
+			'@typescript-eslint/no-unused-vars': [
+				'warn',
+				{
+					argsIgnorePattern: '^_',
+					varsIgnorePattern: '^_',
+					caughtErrorsIgnorePattern: '^_',
 				},
 			],
 			'@typescript-eslint/no-inferrable-types': 'error',

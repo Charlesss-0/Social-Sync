@@ -9,11 +9,13 @@ import Link from 'next/link';
 import { cn } from '@/utils/cn';
 import { createClient } from '@/utils/client';
 import { type JSX, useState } from 'react';
+import { useRouter } from 'next/navigation';
 
 export function SignUpForm({
 	className,
 	...props
 }: React.ComponentPropsWithoutRef<'div'>): JSX.Element {
+	const router = useRouter();
 	const [email, setEmail] = useState('');
 	const [password, setPassword] = useState('');
 	const [repeatPassword, setRepeatPassword] = useState('');
@@ -36,11 +38,11 @@ export function SignUpForm({
 			const { error } = await supabase.auth.signUp({
 				email,
 				password,
-				options: {
-					emailRedirectTo: `${window.location.origin}/protected`,
-				},
 			});
+
 			if (error) throw error;
+
+			router.replace('/');
 		} catch (error: unknown) {
 			setError(error instanceof Error ? error.message : 'An error occurred');
 		} finally {
