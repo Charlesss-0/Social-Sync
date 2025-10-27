@@ -6,7 +6,6 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { cn } from '@/utils/cn';
-import { createClient } from '@/utils/client';
 import { useRouter } from 'next/navigation';
 import { type JSX, useState } from 'react';
 
@@ -19,24 +18,7 @@ export function UpdatePasswordForm({
 	const [isLoading, setIsLoading] = useState(false);
 	const router = useRouter();
 
-	const handleForgotPassword = async (e: React.FormEvent): Promise<void> => {
-		e.preventDefault();
-		const supabase = createClient();
-		setIsLoading(true);
-		setError(null);
-
-		try {
-			const { error } = await supabase.auth.updateUser({ password });
-
-			if (error) throw error;
-
-			router.replace('/');
-		} catch (error: unknown) {
-			setError(error instanceof Error ? error.message : 'An error occurred');
-		} finally {
-			setIsLoading(false);
-		}
-	};
+	const handleForgotPassword = async (e: React.FormEvent): Promise<void> => {};
 
 	return (
 		<div className={cn('flex flex-col gap-6', className)} {...props}>

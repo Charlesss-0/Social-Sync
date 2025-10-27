@@ -1,0 +1,14 @@
+services:
+  database:
+    container_name: social-sync-db
+    image: postgres:latest
+    restart: always
+    environment:
+      - POSTGRES_DB=social_sync_dev
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=prisma
+    ports:
+      - '5432:5432'
+networks:
+  default:
+    name: social-sync-network

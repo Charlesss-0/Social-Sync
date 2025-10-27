@@ -7,7 +7,6 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import Link from 'next/link';
 import { cn } from '@/utils/cn';
-import { createClient } from '@/utils/client';
 import { type JSX, useState } from 'react';
 
 export function ForgotPasswordForm({
@@ -19,25 +18,7 @@ export function ForgotPasswordForm({
 	const [success, setSuccess] = useState(false);
 	const [isLoading, setIsLoading] = useState(false);
 
-	const handleForgotPassword = async (e: React.FormEvent): Promise<void> => {
-		e.preventDefault();
-		const supabase = createClient();
-		setIsLoading(true);
-		setError(null);
-
-		try {
-			// The url which will be included in the email. This URL needs to be configured in your redirect URLs in the Supabase dashboard at https://supabase.com/dashboard/project/_/auth/url-configuration
-			const { error } = await supabase.auth.resetPasswordForEmail(email, {
-				redirectTo: `${window.location.origin}/auth/update-password`,
-			});
-			if (error) throw error;
-			setSuccess(true);
-		} catch (error: unknown) {
-			setError(error instanceof Error ? error.message : 'An error occurred');
-		} finally {
-			setIsLoading(false);
-		}
-	};
+	const handleForgotPassword = async (e: React.FormEvent): Promise<void> => {};
 
 	return (
 		<div className={cn('flex flex-col gap-6', className)} {...props}>

@@ -7,47 +7,42 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import Link from 'next/link';
 import { cn } from '@/utils/cn';
-import { createClient } from '@/utils/client';
 import { type JSX, useState } from 'react';
-import { useRouter } from 'next/navigation';
+import { redirect } from 'next/navigation';
+import { authClient } from '@/lib/auth-client';
 
 export function SignUpForm({
 	className,
 	...props
 }: React.ComponentPropsWithoutRef<'div'>): JSX.Element {
-	const router = useRouter();
-	const [email, setEmail] = useState('');
-	const [password, setPassword] = useState('');
-	const [repeatPassword, setRepeatPassword] = useState('');
+	const [email, setEmail] = useState<string>('');
+	const [name, setName] = useState<string>('');
+	const [password, setPassword] = useState<string>('');
+	const [repeatPassword, setRepeatPassword] = useState<string>('');
 	const [error, setError] = useState<string | null>(null);
-	const [isLoading, setIsLoading] = useState(false);
+	const [isLoading, setIsLoading] = useState<boolean>(false);
 
 	const handleSignUp = async (e: React.FormEvent): Promise<void> => {
 		e.preventDefault();
-		const supabase = createClient();
-		setIsLoading(true);
-		setError(null);
 
-		if (password !== repeatPassword) {
-			setError('Passwords do not match');
-			setIsLoading(false);
-			return;
-		}
-
-		try {
-			const { error } = await supabase.auth.signUp({
+		await authClient.signUp.email(
+			{
 				email,
 				password,
-			});
-
-			if (error) throw error;
-
-			router.replace('/');
-		} catch (error: unknown) {
-			setError(error instanceof Error ? error.message : 'An error occurred');
-		} finally {
-			setIsLoading(false);
-		}
+				name,
+			},
+			{
+				onRequest: () => setIsLoading(true),
+				onSuccess: () => {
+					setIsLoading(false);
+					redirect('/');
+				},
+				onError: ctx => {
+					setIsLoading(false);
+					setError(ctx.error.message);
+				},
+			}
+		);
 	};
 
 	return (
@@ -60,6 +55,17 @@ export function SignUpForm({
 				<CardContent>
 					<form onSubmit={handleSignUp}>
 						<div className="flex flex-col gap-6">
+							<div className="grid gap-2">
+								<Label htmlFor="email">Name</Label>
+								<Input
+									id="name"
+									type="text"
+									placeholder="Your name"
+									required
+									value={name}
+									onChange={e => setName(e.target.value)}
+								/>
+							</div>
 							<div className="grid gap-2">
 								<Label htmlFor="email">Email</Label>
 								<Input

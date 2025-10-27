@@ -9,6 +9,8 @@ const compat = new FlatCompat({
 const eslintConfig = [
 	{
 		ignores: ['**/node_modules', '**/.next'],
+		files: ['**/*.{js,jsx,ts,tsx}'],
+		rules: {},
 	},
 	...compat.config({
 		extends: [
@@ -20,8 +22,9 @@ const eslintConfig = [
 			'plugin:jsx-a11y/recommended',
 			'plugin:import/errors',
 			'plugin:import/warnings',
+			'plugin:react-hooks/recommended',
 		],
-		plugins: ['@typescript-eslint', 'react', 'jsx-a11y', 'import'],
+		plugins: ['@typescript-eslint', 'react', 'jsx-a11y', 'import', 'react-hooks'],
 		parserOptions: {
 			ecmaFeatures: {
 				jsx: true,
@@ -39,11 +42,14 @@ const eslintConfig = [
 			},
 		},
 		rules: {
+			// ESLint core
 			'no-console': 'warn',
 			'no-unused-vars': 'off',
 			'no-var': 'error',
 			'prefer-const': 'error',
 			eqeqeq: ['error', 'always'],
+
+			// TypeScript (@typescript-eslint)
 			'@typescript-eslint/explicit-function-return-type': 'warn',
 			'@typescript-eslint/no-empty-function': 'warn',
 			'@typescript-eslint/no-unused-expressions': 'error',
@@ -65,11 +71,15 @@ const eslintConfig = [
 			],
 			'@typescript-eslint/no-inferrable-types': 'error',
 			'@typescript-eslint/triple-slash-reference': 'off',
+
+			// React
 			'react/react-in-jsx-scope': 'off',
 			'react/prop-types': 'off',
 			'react/jsx-key': 'error',
 			'react/jsx-no-target-blank': 'error',
 			'react/self-closing-comp': 'error',
+
+			// JSX A11Y
 			'jsx-a11y/alt-text': 'warn',
 			'jsx-a11y/anchor-is-valid': [
 				'error',
@@ -81,7 +91,18 @@ const eslintConfig = [
 			],
 			'jsx-a11y/label-has-associated-control': 'error',
 			'jsx-a11y/no-redundant-roles': 'error',
+
+			// Import plugin
 			'import/no-unresolved': 'error',
+
+			// React Hooks
+			'react-hooks/rules-of-hooks': 'error',
+			'react-hooks/exhaustive-deps': 'warn',
+			'react-hooks/config': 'error',
+			'react-hooks/error-boundaries': 'error',
+			'react-hooks/component-hook-factories': 'error',
+			'react-hooks/unsupported-syntax': 'error',
+			'react-hooks/incompatible-library': 'warn',
 		},
 	}),
 ];
