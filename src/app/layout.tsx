@@ -1,9 +1,9 @@
-import { geistMono, geistSans } from '@/fonts';
+import { GeistSans } from 'geist/font/sans';
+import { GeistMono } from 'geist/font/mono';
 import './globals.css';
 
 import type { Metadata } from 'next';
 import { type JSX } from 'react';
-import AuthProvider from '@/components/auth-provider';
 
 export const metadata: Metadata = {
 	title: 'Social Sync',
@@ -16,9 +16,7 @@ export default function RootLayout({
 }: Readonly<{ children: React.ReactNode }>): JSX.Element {
 	return (
 		<html lang="en">
-			<body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
-				<AuthProvider>{children}</AuthProvider>
-			</body>
+			<body className={`${GeistSans.variable} ${GeistMono.variable} antialiased`}>{children}</body>
 		</html>
 	);
 }
