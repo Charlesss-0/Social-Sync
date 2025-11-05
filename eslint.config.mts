@@ -1,33 +1,29 @@
-import { FlatCompat } from '@eslint/eslintrc';
+import { defineConfig } from 'eslint/config';
+import globals from 'globals';
 import js from '@eslint/js';
+import pluginImport from 'eslint-plugin-import';
+import pluginJsxA11y from 'eslint-plugin-jsx-a11y';
+import pluginReact from 'eslint-plugin-react';
+import pluginReactHooks from 'eslint-plugin-react-hooks';
+import tseslint from 'typescript-eslint';
 
-const compat = new FlatCompat({
-	baseDirectory: import.meta.dirname,
-	recommendedConfig: js.configs.recommended,
-});
-
-const eslintConfig = [
+export default defineConfig([
+	js.configs.recommended,
+	tseslint.configs.strict,
+	pluginReact.configs.flat.recommended,
+	pluginReactHooks.configs.flat.recommended,
 	{
-		ignores: ['**/node_modules', '**/.next'],
-		files: ['**/*.{js,jsx,ts,tsx}'],
-		rules: {},
-	},
-	...compat.config({
-		extends: [
-			'eslint:recommended',
-			'plugin:@next/next/recommended',
-			'plugin:@typescript-eslint/recommended',
-			'plugin:import/typescript',
-			'plugin:react/recommended',
-			'plugin:jsx-a11y/recommended',
-			'plugin:import/errors',
-			'plugin:import/warnings',
-			'plugin:react-hooks/recommended',
-		],
-		plugins: ['@typescript-eslint', 'react', 'jsx-a11y', 'import', 'react-hooks'],
-		parserOptions: {
-			ecmaFeatures: {
-				jsx: true,
+		files: ['**/*.{js,mjs,cjs,ts,mts,cts,jsx,tsx}'],
+		plugins: {
+			import: pluginImport,
+			'jsx-a11y': pluginJsxA11y,
+		},
+		languageOptions: {
+			globals: globals.browser,
+			parserOptions: {
+				ecmaFeatures: {
+					jsx: true,
+				},
 			},
 		},
 		settings: {
@@ -41,6 +37,8 @@ const eslintConfig = [
 				version: 'detect',
 			},
 		},
+	},
+	{
 		rules: {
 			// ESLint core
 			'no-console': 'warn',
@@ -104,7 +102,5 @@ const eslintConfig = [
 			'react-hooks/unsupported-syntax': 'error',
 			'react-hooks/incompatible-library': 'warn',
 		},
-	}),
-];
-
-export default eslintConfig;
+	},
+]);
