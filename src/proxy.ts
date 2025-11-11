@@ -1,16 +1,16 @@
-import { auth } from '@/lib/auth';
-import { headers } from 'next/headers';
+import { getCookieCache } from 'better-auth/cookies';
 import { NextResponse, type NextRequest } from 'next/server';
 
 export async function proxy(request: NextRequest): Promise<NextResponse> {
-	const path = request.nextUrl.pathname;
-	const session = await auth.api.getSession({
-		headers: await headers(),
-	});
+	const session = await getCookieCache(request);
 
-	if (!session && !path.startsWith('/auth')) {
-		return NextResponse.redirect(new URL('/auth/login', request.url));
+	if (!session) {
+		return NextResponse.redirect(new URL('/', request.url));
 	}
 
 	return NextResponse.next();
 }
+
+export const config = {
+	matcher: ['/dashboard'],
+};

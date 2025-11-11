@@ -10,7 +10,10 @@ import { cn } from '@/utils/cn';
 import { useRouter } from 'next/navigation';
 import { type JSX, useState } from 'react';
 
-export function LoginForm({ className, ...props }: React.ComponentPropsWithoutRef<'div'>): JSX.Element {
+export function SignInForm({
+	className,
+	...props
+}: React.ComponentPropsWithoutRef<'div'>): JSX.Element {
 	const [email, setEmail] = useState('');
 	const [password, setPassword] = useState('');
 	const [error, setError] = useState<string | null>(null);

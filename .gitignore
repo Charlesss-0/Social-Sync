@@ -43,3 +43,6 @@ next-env.d.ts
 /prisma/generated/prisma
 
 /generated/prisma
+
+# development notes
+TODO.md

@@ -1,5 +1,5 @@
 import { type JSX } from 'react';
 
 export default function Calendar(): JSX.Element {
-	return <h1>Calendar</h1>;
+	return <h1 className="font-bold">Calendar</h1>;
 }

@@ -1,4 +1,4 @@
-import { SignUpForm } from '@/components/auth/sign-up-form';
+import { SignUpForm } from '@/components/sign-up-form';
 import { type JSX } from 'react';
 
 export default function SignUp(): JSX.Element {
