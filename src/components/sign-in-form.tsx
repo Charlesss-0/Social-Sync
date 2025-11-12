@@ -20,17 +20,17 @@ export function SignInForm({
 	const [isLoading, setIsLoading] = useState(false);
 	const router = useRouter();
 
-	const handleLogin = async (e: React.FormEvent): Promise<void> => {};
+	const handleSignIn = async (e: React.FormEvent): Promise<void> => {};
 
 	return (
 		<div className={cn('flex flex-col gap-6', className)} {...props}>
 			<Card>
 				<CardHeader>
-					<CardTitle className="text-2xl">Login</CardTitle>
-					<CardDescription>Enter your email below to login to your account</CardDescription>
+					<CardTitle className="text-2xl">Sign In</CardTitle>
+					<CardDescription>Enter your email below to sign in to your account</CardDescription>
 				</CardHeader>
 				<CardContent>
-					<form onSubmit={handleLogin}>
+					<form onSubmit={handleSignIn}>
 						<div className="flex flex-col gap-6">
 							<div className="grid gap-2">
 								<Label htmlFor="email">Email</Label>
@@ -63,7 +63,7 @@ export function SignInForm({
 							</div>
 							{error && <p className="text-sm text-red-500">{error}</p>}
 							<Button type="submit" className="w-full" disabled={isLoading}>
-								{isLoading ? 'Logging in...' : 'Login'}
+								{isLoading ? 'Signin in...' : 'Sign In'}
 							</Button>
 						</div>
 						<div className="mt-4 text-center text-sm">
