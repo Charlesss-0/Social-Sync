@@ -7,8 +7,9 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import Link from 'next/link';
 import { cn } from '@/utils/cn';
-import { useRouter } from 'next/navigation';
 import { type JSX, useState } from 'react';
+import { authClient } from '@/lib/auth-client';
+import { useRouter } from 'next/navigation';
 
 export function SignInForm({
 	className,
@@ -20,7 +21,25 @@ export function SignInForm({
 	const [isLoading, setIsLoading] = useState(false);
 	const router = useRouter();
 
-	const handleSignIn = async (e: React.FormEvent): Promise<void> => {};
+	const handleSignIn = async (e: React.FormEvent): Promise<void> => {
+		e.preventDefault();
+
+		const { data, error } = await authClient.signIn.email({
+			email,
+			password,
+			rememberMe: true,
+		});
+
+		if (error && !data) {
+			setError(error.message || 'Something went wrong. Please try again.');
+			setIsLoading(false);
+		}
+
+		await authClient.getSession();
+
+		setIsLoading(false);
+		router.push('/dashboard');
+	};
 
 	return (
 		<div className={cn('flex flex-col gap-6', className)} {...props}>

@@ -8,7 +8,7 @@ import { Label } from '@/components/ui/label';
 import Link from 'next/link';
 import { cn } from '@/utils/cn';
 import { type JSX, useState } from 'react';
-import { redirect } from 'next/navigation';
+import { useRouter } from 'next/navigation';
 import { authClient } from '@/lib/auth-client';
 
 export function SignUpForm({
@@ -21,28 +21,26 @@ export function SignUpForm({
 	const [repeatPassword, setRepeatPassword] = useState<string>('');
 	const [error, setError] = useState<string | null>(null);
 	const [isLoading, setIsLoading] = useState<boolean>(false);
+	const router = useRouter();
 
 	const handleSignUp = async (e: React.FormEvent): Promise<void> => {
 		e.preventDefault();
 
-		await authClient.signUp.email(
-			{
-				email,
-				password,
-				name,
-			},
-			{
-				onRequest: () => setIsLoading(true),
-				onSuccess: () => {
-					setIsLoading(false);
-					redirect('/');
-				},
-				onError: ctx => {
-					setIsLoading(false);
-					setError(ctx.error.message);
-				},
-			}
-		);
+		const { data, error } = await authClient.signUp.email({
+			name,
+			email,
+			password,
+		});
+
+		if (error && !data) {
+			setError(error.message || 'Something went wrong. Please try again.');
+			setIsLoading(false);
+		}
+
+		await authClient.getSession();
+
+		setIsLoading(false);
+		router.push('/dashboard');
 	};
 
 	return (
