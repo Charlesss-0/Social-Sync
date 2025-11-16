@@ -26,13 +26,15 @@ export function SignUpForm({
 	const handleSignUp = async (e: React.FormEvent): Promise<void> => {
 		e.preventDefault();
 
-		const { data, error } = await authClient.signUp.email({
+		setIsLoading(true)
+
+		const { error } = await authClient.signUp.email({
 			name,
 			email,
 			password,
 		});
 
-		if (error && !data) {
+		if (error) {
 			setError(error.message || 'Something went wrong. Please try again.');
 			setIsLoading(false);
 		}

@@ -24,13 +24,15 @@ export function SignInForm({
 	const handleSignIn = async (e: React.FormEvent): Promise<void> => {
 		e.preventDefault();
 
-		const { data, error } = await authClient.signIn.email({
+		setIsLoading(true);
+
+		const { error } = await authClient.signIn.email({
 			email,
 			password,
 			rememberMe: true,
 		});
 
-		if (error && !data) {
+		if (error) {
 			setError(error.message || 'Something went wrong. Please try again.');
 			setIsLoading(false);
 		}
