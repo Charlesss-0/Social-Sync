@@ -32,7 +32,9 @@
     "next-env.d.ts",
     "**/*.ts",
     "**/*.tsx",
+    "**/*.d.ts",
     ".next/types/**/*.ts",
+    "prisma.config.ts",
     ".next/dev/types/**/*.ts"
   ],
   "exclude": [
