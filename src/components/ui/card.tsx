@@ -7,7 +7,7 @@ function Card({ className, ...props }: React.ComponentProps<'div'>): React.JSX.E
 		<div
 			data-slot="card"
 			className={cn(
-				'rounded-xl bg-white text-neutral-800 p-4 border border-neutral-200',
+				'rounded-xl bg-white text-neutral-800 p-4 border border-neutral-200 text-sm font-medium',
 				className
 			)}
 			{...props}
